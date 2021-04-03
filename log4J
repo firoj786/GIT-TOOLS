@@ -1,0 +1,333 @@
+-------What is Logging-----------
+Logging is the process of generating some intrim
+Output of executing a program.
+
+What is the purpose of logging.
+#1 Debugging the code= The process of identifying and fixing
+   The logical errors in the code is colled debugging.
+
+When we write a program it may gets compiled but may not
+Produces rhe right output,because there could be some local
+Error in the program due to which if fails in computing the 
+Right output.the programmer has to find at which part 
+Of the code the problem is there.
+1.1 The user has to evaluate the code line by line identify
+At which part of the code the problem is.This task seems to 
+Work with shorter program with less number of line of code,
+If the program comprises of lot of lines of code it would
+Become impossible and kills programmers productivity. 
+
+1.2 Add ceckpoint statements in printing the intermediate output of 
+  The program execution, So that we determine based on the output where
+  Is the logical error in the program.
+
+1.3 We run our applications in debugging mode and we can add debug/break 
+    Points in the program and can control the flow of execution of the program
+    and inspect intermediate output.
+ 1.3.1 Running the application in debug mode consumes more system resource
+       Like memory and cpu and executes
+1.3.2 For larger application lauching them in debug mode will crash
+1.3.3 Debugging really becomes complex while running through 
+      Loops and multi-threaded programs.
+1.3.4 The application should run locally so that we can navigate throug
+      the source code to debug the failure,but incase production like env
+      We can not debug the application.
+
+Looks like out of the above option sysout and checkpoints in code seems to 
+A viable solution accross all the environments.
+
+What is the scope of these checkpoints or sysouts in our code.
+ -Sysouts always shows down the execution of the program,there
+ Is an huge impact on the performance of the Application.
+ -These sysouts we introduced are specially required during
+  Development post completion of the development and tesssting 
+  We never needs these,but we can not get rid of them and still exists as part of code. 
+ That is where the solution to this is use logging.
+ 
+ 2# In production like environments.
+    How to identify these failures that are produced by program.
+    -If we never get a change to identify them, it means we never 
+      get a change to rectify them. this indicates you are loosing a part 
+      Of functionality or bussniess or users which damages the reputation.
+      
+      It is do critical to find these failures and fix them
+ So to fix them we need to output failures and checkpoints and this time 
+ the output should be return permanently.
+ 
+ To solve we need logging.
+ ----------------------------------
+ The Generalrequairements of loggin
+ 1. Should not impact the performance of the application.
+ 2.Log messages should be clear and formatted to understan the output.
+ Because human brain can not process unformated information.
+ 3. Should proceduce sequential in the order of emitts.
+ 4. Should handle Multi-Threaded and should not overlap/overwrite
+    the multiple thread excecution output.
+    5. Few outputs should be suspended in few environment.
+    6. Few outputs should be written permanentlly.
+    7. Different statements of output should be written to different places,
+    Like debug statements on to the console.and critical checkpints and error
+     output to a file to be permanent.
+     
+How to address the above 
+------------------------
+That is where logging frameworks comes into play.
+Any of the logging frameworks are desigend to address the above problems or produced
+them as features.
+There are multiple logging feameworks are available in the market.
+1. Log4J
+2. java Logging API
+3. Appache Commans Logging
+4. sl4j
+5. logback
+6. log4j2= is the latest among them 
+
+How does a typical logging framework looks like, what is the archhitecture of it 
+                      (or)
+ With what components these frameworks were built.
+ 
+Log4J=In provide infrastructure components enable application to use them 
+In producing the logging by configuration them.
+
+---------Logger--------
+LogManager
+ConsoleAppender, FileAppender, RollingFileAppander,EmailAppander
+Formatter [SimpleLayoutFormatter, PatternLayoutFormatter]
+----------LofFilter---------
+The developer has to configure these components in such a way he want to use 
+in his spplication and use logging framework API to produce the logging.
+
+1. Log4J [Minimal features]
+2. Java Logging API
+-----------------------------------------
+Appache commans Logging 
+SL4J loging 
+
+Log4j2=much improved version of predecessorsand performs better.    
+     
+Environment: System where application is running with all setup 
+Type of Env:  a. DEV    b. QA    c. UAT   d. Production
+
+=> While Developing and Testing applications, messages are printed on console
+   in IDE(STS/Eclipse).
+=> Messages like Success, Warning, Errors/Exceptions..etc
+=> console section will display last 100/200 messages only.
+
+===============================================================
+Logging : It is a process of getting/fetching 
+	Success, Warning, Errors/Exceptions messages
+          from Server  while it is running.
+
+=> Log4J is a Logging Tool.
+
+=> By using Log4J, we can get log messages and store in 
+   File (Log File)**** [___.log]
+   Database
+   Email (send Mail)
+   Console (Print on Console- Dev Env).
+
+
+=> By using Log Files, Dev/Support Teams identifies the mistakes and Fix code.
+
+   ===================================================================
+			Log4J Components
+
+          a. Logger        b. Appender         c. Layout
+        (which class)     (where to print)     (how to print)
+
+a. Logger Object :
+=> This object must be created inside class for which Log4J is required.
+=> Ex: Controllers, Services, Repository ..etc Needs Log4J Server
+   if we get any exception/errors inside these classes 
+    we can trace those into Log File.
+=> DO NOT CREATE logger object if we dont want to Logging for class
+   Ex: Model/Entity
+
+Ex:
+  private static Logger log=Logger.getLogger(TestApp.class);
+  private static Logger log=Logger.getLogger(EmployeeRestController.class);
+
+
+b. Appender :
+   Appender is used to specify where to store Log Message.
+
+Types are:
+1. ConsoleAppender  : print log message on console
+2. FileAppender **  : Store log message in .log file
+3. JdbcAppender     : Store log message inside Database table.
+4. Ftp/TelnetAppender : Send data from one server to another Server.
+5. SMTP Appender     : Send Log mesage using email.
+
+
+c. Layout: It indicates Message Format that should be printed on Appender.
+1. Simple Layout : Print message as it is given by application
+2. HTML Layout   : Print message as HTML file
+3. XML Layout    : Print message as XML Output
+4.*** Pattern Layout : Print message as Given pattern by Programmer
+  
+
+
+--------------------------------------------------------------
+Priority Methods:-
+ These are pre-defined methods given inside Logger Object.
+ By using these methods, we have to print messages at Appender.
+
+-------------------------------------------------
+	Slno      NAME           Method
+-------------------------------------------------
+	1.	  DEBUG		debug(msg)
+	2.        INFO          info(msg)
+	3.        WARN          warn(msg)
+	4.        ERROR         error(msg)
+	5.        FATAL         fatal(msg)
+	-NA-       OFF            -NA-
+-------------------------------------------------
+DEBUG* : This method is used to print a final/success message.
+Ex:  Employee created with ID-EMP-3652 Successfully
+
+INFO* : This method is used to print current status in execution
+ex: Request cam to Controller method.
+    Object sent to Service layer.
+    Service Returned back to Controller
+    try block execution completed.
+
+
+WARN : This method is used to print Warnings in application
+Ex: File Object is created but never closed.
+    Variable is created, but not used.
+
+
+ERROR* : This method is used to print any general exception
+Ex:  NullPointerException, ArrayIndexOutOfBoundsException..etc
+    Application Id is null can not be processed.
+
+
+FATAL: This method is used to print any High level exception that makes 
+        STOPING application usage.
+
+Ex: Database connection is not woking.
+    Network server/Middleware server is Down.
+
+=========Ex#1============================================
+1. Create Maven Application
+2. pom.xml
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+	</dependencies>
+
+3. Test class
+package in.nit;
+
+import org.apache.log4j.Appender;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Layout;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
+
+public class TestApp {
+	//3.Create Logger object
+	private static Logger log=Logger.getLogger(TestApp.class);
+	
+	public static void main(String[] args) {
+		//1. Create layout
+		Layout layout=new SimpleLayout();
+		//2. create appender + link layout
+		Appender app=new ConsoleAppender(layout);
+		
+		//4. link appender with logger
+		log.addAppender(app);
+		
+		
+		//---Print Messages--------------
+		log.info("FROM INFO");
+		log.debug("FROM DEBUG");
+		log.fatal("FROM FATAL");
+		log.error("FROM ERROR");
+		log.warn("FROM WANR");
+	}
+}
+==============Example#2======================================
+package in.nit;
+
+import org.apache.log4j.Appender;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Layout;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+
+public class TestApp {
+	//3.Create Logger object
+	private static Logger log=Logger.getLogger(TestApp.class);
+	
+	public static void main(String[] args) {
+		//1. Create layout
+		//Layout layout=new HTMLLayout();
+		//Layout layout=new SimpleLayout();
+		
+		//Layout layout=new XMLLayout();
+		Layout layout=new PatternLayout("%p %d %C %M  %m %n");
+		
+		//2. create appender + link layout
+		Appender app=new ConsoleAppender(layout);
+		
+		//4. link appender with logger
+		log.addAppender(app);
+		
+		
+		//---Print Messages--------------
+		log.info("FROM INFO");
+		log.debug("FROM DEBUG");
+		log.fatal("FROM FATAL");
+		log.error("FROM ERROR");
+		log.warn("FROM WANR");
+	}
+}
+============Example#3====================================
+package in.nit;
+
+import java.io.IOException;
+
+import org.apache.log4j.Appender;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Layout;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+
+public class TestApp {
+	//3.Create Logger object
+	private static Logger log=Logger.getLogger(TestApp.class);
+	
+	public static void main(String[] args) throws Exception {
+		//1. Create layout
+		//Layout layout=new HTMLLayout();
+		//Layout layout=new SimpleLayout();
+		
+		//Layout layout=new XMLLayout();
+		Layout layout=new PatternLayout("%p %d %C %M  %m %n");
+		
+		//2. create appender + link layout
+		//Appender app=new ConsoleAppender(layout);
+		Appender app=new FileAppender(layout, "D:/mylogs/data.log");
+		
+		//4. link appender with logger
+		log.addAppender(app);
+		
+		
+		//---Print Messages--------------
+		log.info("FROM INFO");
+		log.debug("FROM DEBUG");
+		log.fatal("FROM FATAL");
+		log.error("FROM ERROR");
+		log.warn("FROM WANR");
+	}
+}
+

@@ -1,0 +1,78 @@
+-----------------------------------GIT Notes---------------------
+ Firoj Khan
+Software Engineer
+SenSen Networks
+
+ 
+ Install Git-2.27.0-64-bit.exe on your local machine.
+ Then create a directory something line salesmanagementrepo
+ and navigate into that directory and type
+ . git init=To initialize a git repository.
+ . git status=Shows the current state of the changes in the local repo
+ Create a new file called "firoj.txt",Now this file in untracked 
+ state so to commit we need to stage it.
+ . git init = Creates a git repository in that folder.
+ . git add filename=stage the file for commit.
+ . git commit -m "message"=all the files we staged will be commited.
+ . git log=We can view all the commits to repository.
+ . git reset HEAD~1 =Remove last commit
+ 
+ . git branch branchName=creates a new branch.
+ . git branch=Shows the current branches in the repository.
+ . git checkout branchName=Will switch netween branches.
+ 
+ Merge:-
+   Goto the baserepository using 
+   . git checkout firoj
+   And run the git merge branchName
+   You want to merge into develop branch above.
+   . git merege firoj1
+   
+ Rebase:-
+     - re-write the commits
+     - either re-write / merging the commits in to branch.
+     . git rebase -i HEAD~2
+     - To edit the last 2 commits.
+  If you want to re-write the commits of another branch to
+  base branch then also we can use rebase.
+     . git checkout firoj
+     . git rebase firoj1
+     
+ . git stash =To pause the current changes of
+   the branch so that you can switch between
+   branches.
+   
+   . git stash
+     ->switch branch
+     ->come back
+     ->git stash apply
+ 
+ INTRODUCTION
+ . There are many version control systems both 
+ commercial and open source.Few of them are
+  -Version control system (VCS)
+  -Distributed Version control system (DVCS)
+     . Few examples of DVCS are Concurrent Version System.
+      (CVS), Subversion (SVN) and GIT.
+ . The main difference beetween GIT and others
+   is if network break down is there, you are in
+   trouble.GIT you can work locally and can sync
+   your chenges at latter time.
+ Working With GIT 
+ . git init-Creates an master repository.
+ . git add-Adds a file file to the repository.
+ . git status-Shows the status of the repository
+ . git commit -m --Message "first file"
+ . git reset HEAD "file" -to move back to
+   untracked status.
+ . git --cached rm -to untrack a file changes
+ . git tree -to see full commits.
+ 
+ GIT LOG
+ . GIT LOG -To get the history of repository
+ . git log --format=fuller (author & committer)
+ . git log --format=raw = hash of commit
+ . git log oneline
+ . Git log --oneline --graph --decorate
+ . git cat-file -p 723d8c2=To se commit info
+ . echo "Banana" | git hash-object -- stdin

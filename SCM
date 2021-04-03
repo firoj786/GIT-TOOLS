@@ -1,0 +1,28 @@
+Fundamentals of SCM(Source Code Management) Repositories.
+------------------------------------
+These are softwares being developement by different
+Organizations and are distributed as comercial/open 
+Source SCM repository software to manage/maintain source 
+Code and distribute across the people in the team.
+
+There distribute SCM Software into to parts.
+1- SCM Server:- This has to be installed on the central server
+                Machine of the organization and the source code 
+                Should be deposited here.
+ . Keeps track of files like 
+    -When it was created 
+    -When it has been modified
+    -Who created / how many times files are modified / who made changes.
+   For every write on file on the repository the SCM server keeps the
+   Versioning of the file.
+2- SCM Client:- Connect to the SCM Server in pulling the source code
+                Or pushing the source code onto the server.
+---Lock-Modify-Unlock Strategy [Problems]---
+# Many cases developer while working on a bigger requirement might have 
+To grab lock on multiple files of the projrct. eventually his changes 
+Takes lot of time to finish as it is a big requirementn an might have hold 
+The lock on the files for lot if time.that makes the other team members
+Wait indefinetly loosing their productive.
+#Deadlocks are common
+#If someone locks the files and goon a long vacation then others in team
+  have no choice apart from waiting for team
